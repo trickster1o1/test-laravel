@@ -30,12 +30,12 @@
                                     <input type="text" id="fname">
                                 </div>
                                 <div class="input-group">
-                                    <label for="fname">Middle Name</label>
-                                    <input type="text" id="fname">
+                                    <label for="mname">Middle Name</label>
+                                    <input type="text" id="mname">
                                 </div>
                                 <div class="input-group">
-                                    <label for="fname">Last Name</label>
-                                    <input type="text" id="fname">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" id="lname" class="required">
                                 </div>
                             </div>
 
@@ -46,7 +46,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  
+  <script src="{{asset('assets/main.js')}}"></script>
 </body>
 
 </html>

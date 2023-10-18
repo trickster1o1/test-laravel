@@ -68,7 +68,7 @@
     background-color: rgba(0,0,0,0);
     margin-left: .2em !important;
     margin-right: .3em;
-    border: none;
+    border: 1px solid rgba(0,0,0,0);
     outline: none;
     padding: 5px;
 } .input-group > label{
