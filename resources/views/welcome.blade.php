@@ -15,10 +15,10 @@
 </head>
 
 <body>
-    <div class="main-cont" style="background-image: url('{{ asset('assets/image/wood.jpg') }}')">
-        <div class="mobile-cont" style="background-image: url('{{ asset('assets/image/pixel.png') }}')">
+    <div class="main-cont custom-bg" style="background-image: url('{{ asset('assets/image/wood.jpg') }}')">
+        <div class="mobile-cont custom-bg" style="background-image: url('{{ asset('assets/image/pixel.png') }}')">
             <div class="mobile-display">
-                <div class="display-glass">
+                <div class="display-glass container pt-2">
                     <div class="form-cont">
                         <h4>Personal</h4>
 
@@ -31,11 +31,11 @@
                                 </div>
                                 <div class="input-group">
                                     <label for="mname">Middle Name</label>
-                                    <input type="text" id="mname">
+                                    <input type="text" id="mname" >
                                 </div>
                                 <div class="input-group">
                                     <label for="lname">Last Name</label>
-                                    <input type="text" id="lname" class="required">
+                                    <input type="text" id="lname" class="required lname">
                                 </div>
                             </div>
 

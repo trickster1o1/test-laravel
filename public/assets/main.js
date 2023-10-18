@@ -1,4 +1,21 @@
 let req = document.getElementsByClassName('required');
+let view = screen.width
+let flag = 0;
+let mname = document.getElementById('mname');
+let lname = document.getElementById('lname');
+
+window.addEventListener('resize', () => {
+    if(screen.width < view && flag==0) {
+        mname.parentNode.classList.add("mname");
+        lname.parentNode.classList.add("lname");
+        console.log('chladai xa');
+        flag = 1;
+    }if(screen.width >= view) {
+        mname.parentNode.classList.remove("mname");
+        lname.parentNode.classList.remove("lname");
+        flag=0;
+    }
+});
 
 Array.prototype.map.call(req, (r) => {
     r.addEventListener('focus', () => {
@@ -9,3 +26,4 @@ Array.prototype.map.call(req, (r) => {
         
     });
 });
+
