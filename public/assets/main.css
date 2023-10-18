@@ -37,6 +37,7 @@
     -webkit-box-shadow:0px 0px 265px 28px rgba(0,197,0,.5);
     -moz-box-shadow: 0px 0px 265px 28px rgba(0,197,0,.5);
     box-shadow: 0px 0px 265px 28px rgba(0,197,0,.5);
+    transition: box-shadow .3s ease-in-out;
     width: 65%;
     height: 300px;
     /* padding: 1em;
@@ -47,7 +48,14 @@
         padding-bottom: 2.5em; */
     border-radius: 15px;
 
-} .display-glass {
+} .mobile-display:hover {
+    
+    -webkit-box-shadow:0px 0px 265px 28px rgba(0,197,0,.6);
+    -moz-box-shadow: 0px 0px 265px 28px rgba(0,197,0,.6);
+    box-shadow: 0px 0px 265px 28px rgba(0,197,0,.6);
+} 
+
+.display-glass {
     background: linear-gradient(180deg, rgba(0,0,0,0.4), rgba(255,255,255,0));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
