@@ -8,11 +8,13 @@ window.addEventListener('resize', () => {
     if(screen.width < view && flag==0) {
         mname.parentNode.classList.add("mname");
         lname.parentNode.classList.add("lname");
+        mname.parentNode.parentNode.classList.add('main-div');
         console.log('chladai xa');
         flag = 1;
     }if(screen.width >= view) {
         mname.parentNode.classList.remove("mname");
         lname.parentNode.classList.remove("lname");
+        mname.parentNode.parentNode.classList.remove('main-div');
         flag=0;
     }
 });
