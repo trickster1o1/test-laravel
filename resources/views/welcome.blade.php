@@ -30,11 +30,11 @@
                                     <input type="text" id="fname">
                                 </div>
                                 <div class="input-group">
-                                    <label for="fname">First Name</label>
+                                    <label for="fname">Middle Name</label>
                                     <input type="text" id="fname">
                                 </div>
                                 <div class="input-group">
-                                    <label for="fname">First Name</label>
+                                    <label for="fname">Last Name</label>
                                     <input type="text" id="fname">
                                 </div>
                             </div>

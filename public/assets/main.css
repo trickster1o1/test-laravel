@@ -49,7 +49,7 @@
     border: 1px solid var(--priCol);
     padding: 5px;
     padding-bottom: 15px;
-    background-color: var(--secCol);
+    transition: background-color .2s ease-in-out;
 } .overall-box > span {
     display: block;
     margin-top: -18px;
@@ -71,4 +71,6 @@
 } .input-group > label{
     margin-top: -15px;
     margin-bottom: 2px;
+} .overall-box:hover {
+    background-color: var(--secCol);
 }
