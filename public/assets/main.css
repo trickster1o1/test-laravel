@@ -3,6 +3,7 @@
     padding: 0;
     margin: 0;
     color: var(--priCol);
+    font-family: 'Inter', sans-serif;
 } html,body {
     height: 100vh;
     width: 100vw;
@@ -40,12 +41,6 @@
     transition: box-shadow .3s ease-in-out;
     width: 65%;
     height: 300px;
-    /* padding: 1em;
-    padding-left: 2.5em;
-    padding-bottom: .5em; */
-        /* padding: 3em 2.4em;
-        padding-right: 1em;
-        padding-bottom: 2.5em; */
     border-radius: 15px;
 
 } .mobile-display:hover {
@@ -70,17 +65,23 @@
 /* ============= Form =============== */
 h4 {
     color: var(--priCol);
+    margin-top: 1em;
     margin-bottom: 1em;
 } .overall-box {
+    background-color: #4a2812;
     border: 1px solid var(--priCol);
     padding: 5px;
     padding-bottom: 15px;
     transition: background-color .2s ease-in-out;
 } .overall-box > span {
     display: block;
+    transition: background-color .2s ease-in-out;
+    background-color: #4a2812;
     margin-top: -18px;
     margin-bottom: 15px;
+    width: fit-content;
 } .input-cont {
+    padding-top: .5em;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1em;
@@ -89,6 +90,7 @@ h4 {
     /* overflow-y: hidden; */
     border: 1px solid var(--priCol);
     transition: all .4s ease-in-out;
+    padding-bottom: 1em;
     
 } .input-group > input {
     width: 100%;
@@ -99,9 +101,16 @@ h4 {
     outline: none;
     padding: 5px;
 } .input-group > label{
+    background-color: #4a2812;
+    transition: background-color .2s ease-in-out;
     margin-top: -15px;
-    margin-bottom: 2px;
-} .overall-box:hover {
+    margin-left: .5em;
+    padding-left: .5em;
+    padding-right: .5em;
+    margin-bottom: .8em;
+} .overall-box:hover, .overall-box:hover > span {
+    background-color: var(--secCol);
+} .overall-box:hover label {
     background-color: var(--secCol);
 } input:focus {
     background-color: #999;

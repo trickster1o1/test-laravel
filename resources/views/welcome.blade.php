@@ -19,7 +19,7 @@
         {{-- <div class="mobile-cont custom-bg" style="background-image: url('{{ asset('assets/image/pixel.png') }}')"> --}}
             <div class="mobile-display">
                 <div class="display-glass container pt-2">
-                    <div class="form-cont">
+                    <div class="form-cont container">
                         <h4>Personal</h4>
 
                         <div class="overall-box">

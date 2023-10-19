@@ -32,7 +32,7 @@ Array.prototype.map.call(req, (r) => {
 
 Array.prototype.map.call(txt, (t) => {
     t.addEventListener('focus', () => {
-        t.parentNode.style.backgroundColor = 'white';
+        t.parentNode.style.backgroundColor = '#927E70';
     });
     t.addEventListener('blur', () => {
         t.parentNode.style.backgroundColor = 'rgba(0,0,0,0)';
