@@ -27,15 +27,15 @@
                             <div class="input-cont">
                                 <div class="input-group">
                                     <label for="fname">First Name</label>
-                                    <input type="text" id="fname">
+                                    <input type="text" id="fname" class="tx-field">
                                 </div>
                                 <div class="input-group">
                                     <label for="mname">Middle Name</label>
-                                    <input type="text" id="mname" >
+                                    <input type="text" id="mname"  class="tx-field">
                                 </div>
                                 <div class="input-group">
                                     <label for="lname">Last Name</label>
-                                    <input type="text" id="lname" class="required lname">
+                                    <input type="text" id="lname" class="required lname tx-field">
                                 </div>
                             </div>
 

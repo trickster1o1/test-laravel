@@ -3,6 +3,7 @@ let view = screen.width
 let flag = 0;
 let mname = document.getElementById('mname');
 let lname = document.getElementById('lname');
+let txt = document.getElementsByClassName('tx-field');
 
 window.addEventListener('resize', () => {
     if(screen.width < view && flag==0) {
@@ -21,7 +22,7 @@ window.addEventListener('resize', () => {
 
 Array.prototype.map.call(req, (r) => {
     r.addEventListener('focus', () => {
-        r.parentNode.style.border = '1px solid red';
+        r.parentNode.style.border = '2px solid red';
     });
     r.addEventListener('blur', () => {
         r.parentNode.style.border = '1px solid #73a580';
@@ -29,3 +30,12 @@ Array.prototype.map.call(req, (r) => {
     });
 });
 
+Array.prototype.map.call(txt, (t) => {
+    t.addEventListener('focus', () => {
+        t.parentNode.style.backgroundColor = 'white';
+    });
+    t.addEventListener('blur', () => {
+        t.parentNode.style.backgroundColor = 'rgba(0,0,0,0)';
+        
+    });
+}); 
