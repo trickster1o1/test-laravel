@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
+use App\Models\Frontend\UserPetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+
+Route::controller(UserController::class)->group(function() {
+    Route::post('/login','userLogin')->name('user.login');
+});
+
+Route::controller(UserPetController::class)->group(function() {
+    Route::get('/user-pet/index1','index')->name('userPet.index');
 });
