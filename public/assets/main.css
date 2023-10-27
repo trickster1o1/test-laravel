@@ -70,7 +70,7 @@ h4 {
 } .overall-box {
     background-color: #4a2812;
     border: 1px solid var(--priCol);
-    padding: 5px;
+    padding: 5px 1em;
     padding-bottom: 15px;
     transition: background-color .2s ease-in-out;
 } .overall-box > span {

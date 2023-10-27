@@ -15,16 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 
 Route::controller(UserController::class)->group(function() {
+    Route::get('/','loginForm');
     Route::post('/login','userLogin')->name('user.login');
 });
 
 Route::controller(UserPetController::class)->group(function() {
     Route::get('/user-pet/index1','index')->name('userPet.index');
+    Route::post('/user-pet/search', 'searchPet')->name('pet.search');
+    Route::post('/user-pet/upload', 'addPet')->name('pet.upload');
 });

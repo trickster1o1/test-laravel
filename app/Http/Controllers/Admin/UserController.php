@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     //
+    public function loginForm() {
+        if(session()->has('user')) {
+            return redirect()->route('userPet.index');
+        }
+        return view('welcome');
+    }
     public function userLogin(Request $req)
     {
         // User::create([
