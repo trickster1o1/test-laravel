@@ -10,19 +10,24 @@
             <div class="input-cont">
                 <section class="input-label"><span>Kind of Petsss</span> <span><span id="data-change"><i class="fa fa-save"
                                 style="color: blue" style="color: #8a8a8a;" id="save"></i><i class="fa fa-xmark"
-                                style="color: #8a8a8a;"></i></span><i class="fa-solid fa-circle-info"
+                                style="color: #8a8a8a;" onclick="cancel()"></i></span><i class="fa-solid fa-circle-info"
                             style="color: #8a8a8a;"></i></span></section>
-                <div class="select-div" id="s-div">
-                    {{-- <div class="badge-div">
-                        <input type="checkbox">
-                        <div>
-                            <img src="/storage/uploads/cat.jpg" alt="-">
-                        </div>
-                        <span>
-                            <b>Cat</b> <br>
-                            <small>Pokhara</small>
-                        </span>
-                    </div> --}}
+                <div class="select-div" id="s-div" @if(count($pets)) style="display: flex;" @endif)>
+                    @if (count($pets))
+                        @foreach ($pets as $pet)
+                            <div class="badge-div">
+                                <input type="checkbox" checked id='s-{{ $pet->id }}'
+                                    onclick=addBadge('{{ $pet->id }}','{{ $pet->name }}','{{ $pet->location }}',flag=true,code='s-{{ $pet->id }}')>
+                                <div>
+                                    <img src="/storage/uploads/cat.jpg" alt="-">
+                                </div>
+                                <span>
+                                    <b>{{ $pet->name }}</b> <br>
+                                    <small>{{ $pet->location }}</small>
+                                </span>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
                 <input type="text" placeholder="Enter min 3 characters" id="uField">
                 {{-- <form action="{{route('pet.upload')}}" method="POST" enctype="multipart/form-data">
@@ -60,7 +65,16 @@
 @endsection
 @section('script')
     <script>
+        var record = {!! json_encode($pets->toArray()) !!};
         let srchData = [];
+
+
+        let saveList = [];
+        let recents = [];
+        record.forEach(r => {
+            saveList.push(r['pet_id']);
+            recents.push(r['pet_id']);
+        });
         $('#uField').on('keyup', () => {
             if ($('#uField').val().length >= 3) {
                 $.ajax({
@@ -71,7 +85,9 @@
                     type: 'POST',
                     url: "{{ route('pet.search') }}",
                     success: function(res) {
-                        $('.option-div').css({'display':'flex'});
+                        $('.option-div').css({
+                            'display': 'flex'
+                        });
                         $('#opt-list').html('');
                         let list = '';
                         $('#error').hide();
@@ -82,7 +98,7 @@
                                 list += '<li><div class="badge-div">' +
                                     '<input type="checkbox" id="b-' + m.id +
                                     '" onclick=addBadge("' + m.id + '","' + m.name + '","' + m
-                                    .location + '",flag=false,code="b-' + m.id + '")>' +
+                                    .location + '",flag=false,code="b-' + m.id + '") '+ (!saveList.includes(''+m.id) ? "" : "checked") +' >' +
                                     '<div><img src="/storage/uploads/cat.jpg" alt="-"></div>' +
                                     '<span><b>' + m.name + '</b><br><small>' + m.location +
                                     '</small></span>' +
@@ -101,11 +117,10 @@
             }
 
         });
-        let saveList = [];
-        let recents = [];
-        let sList = '';
+        let sList = $('#s-div').html();
 
         function addBadge(id, name, location, flag, code) {
+            $('#s-div').css({'display':'flex'});
             $('#data-change').show();
             if (!$('#' + code).is(':checked')) {
                 let index = saveList.indexOf(id);
@@ -148,6 +163,7 @@
                 url: "{{ route('pet.upload') }}",
                 success: function(res) {
                     console.log(res);
+                    window.location.reload();
                 },
                 error: function(e) {
                     console.log(e);
@@ -182,13 +198,16 @@
                     let index = saveList.indexOf(s.id);
                     saveList.splice(index, 1);
                     $('.option-div').hide();
-                    $('#clear').prop('checked',false);
-                    $('#select').prop('checked',false);
+                    $('#clear').prop('checked', false);
+                    $('#select').prop('checked', false);
                     $('#data-change').hide();
                     $('#uField').val('');
                 }
 
             });
+        }
+        function cancel() {
+            window.location.reload();
         }
     </script>
 @endsection

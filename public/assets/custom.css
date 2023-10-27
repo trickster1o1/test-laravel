@@ -44,7 +44,7 @@
     border: 1px solid rgba(0,0,0,.2);
     margin-bottom: 1em;
     padding: 1em .5em;
-    display: flex;
+    display: none;
     gap: .5em;
 
 } .badge-div {
@@ -118,4 +118,6 @@
     display: none;
 }#data-change > i{
     margin-right: 1em;
+} i {
+    cursor: pointer;
 }
