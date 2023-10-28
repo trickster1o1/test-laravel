@@ -141,4 +141,6 @@
     margin-right: 2em;
 } #saved-data.disp-menu {
     display: block;
+}.delete {
+    display: none;
 }

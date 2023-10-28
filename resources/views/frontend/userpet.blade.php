@@ -14,17 +14,19 @@
                             <i class="fa fa-save" style="color: blue" style="color: #8a8a8a;" id="save"></i>
                             <i class="fa fa-xmark" style="color: #8a8a8a;" onclick="cancel()"></i>
                         </span>
-                        <span id="saved-data" @if (count($pets))
-                            class="disp-menu"
-                        @endif>
-                            <i class="fa fa-trash text-danger" onclick="cancel()"></i>
+                        <span id="saved-data" @if (count($pets)) class="disp-menu" @endif>
+                            <i class="fa fa-trash text-danger" onclick="showDel()"></i>
                             <i class="fa fa-edit" style="color: blue;" onclick="showIn()"></i>
                         </span>
                         <i class="fa-solid fa-circle-info" style="color: #8a8a8a;"></i>
 
                     </span>
                 </section>
-                <span class="success text-success">Pets assigned successfully. <i class="fa fa-xmark"></i></span>
+                <span class="delete">Are you sure you want to delete? <i class="fa fa-check" onclick="deleteAll()"
+                        style="display: inline-block;margin-right:1em; margin-left:.5em;"></i> <i class="fa fa-xmark"
+                        onclick="hideMsg('delete')"></i></span>
+                <span class="success text-success">Pets assigned successfully. <i class="fa fa-xmark"
+                        onclick="hideMsg('success')"></i></span>
                 <div id="s-div"
                     @if (count($pets)) class="select-div saved" style="display: flex;" @else class="select-div" @endif)>
                     @if (count($pets))
@@ -83,7 +85,7 @@
         var record = {!! json_encode($pets->toArray()) !!};
         let srchData = [];
 
-
+        let rmv = [];
         let saveList = [];
         let recents = [];
         record.forEach(r => {
@@ -136,6 +138,17 @@
         let sList = $('#s-div').html();
 
         function addBadge(id, name, location, flag, code) {
+            $('.select-div').removeClass('saved');
+
+            if (!$('#' + code).is(':checked')) {
+                rmv.push(code);
+
+            } else {
+                if (rmv.indexOf(code) != -1) {
+                    rmv.splice(rmv.indexOf(id), 1);
+                }
+            }
+
             $('#s-div').css({
                 'display': 'flex'
             });
@@ -153,25 +166,24 @@
                 }
                 $('#s-' + id).prop('checked', true);
                 $('#b-' + id).prop('checked', true);
-                console.log(recents);
                 if (!flag) {
                     if (recentIndex == -1) {
-                        sList += '<li><div class="badge-div">' +
+                        sList += '<div class="badge-div">' +
                             '<input type="checkbox" checked id="s-' + id +
                             '" onclick=addBadge("' + id + '","' + name + '","' + location + '",flag=true,code="s-' + id +
                             '")>' +
                             '<div><img src="/storage/uploads/cat.jpg" alt="-"></div>' +
                             '<span><b>' + name + '</b><br><small>' + location +
                             '</small></span>' +
-                            '</div></li>';
+                            '</div>';
                         $('#s-div').html(sList);
                     }
                 }
             }
         }
 
-        $('#save').click(() => {
-            // console.log(saveList);
+
+        function saveCmd(cmd) {
             $.ajax({
                 data: {
                     'list': saveList,
@@ -180,36 +192,66 @@
                 type: 'POST',
                 url: "{{ route('pet.upload') }}",
                 success: function(res) {
-                    console.log(res);
-                    $('.success').show();
+                    if (rmv.length) {
+                        rmv.forEach(r => {
+                            $('#' + r).parent().hide();
+                        });
+                    }
+
+                    $('.select-div').addClass('saved');
+
+                    $('#uField').val('');
+                    $('.option-div').hide();
+                    $('.saved input').hide();
+                    $('#select').prop('checked', false);
+                    if (cmd == 'add') {
+                        $('#uField').hide();
+                        $('.success').show();
+                        $('#data-change').hide();
+                        $('#saved-data').show();
+                    }
+
                 },
                 error: function(e) {
                     console.log(e);
                 }
             });
+        }
+
+        $('#save').click(() => {
+            saveCmd('add');
         });
 
+
+
         function selection(cmd) {
-            let sList = '';
+            let sList = $('#s-div').html();
+            $('.select-div').removeClass('saved');
             $('#data-change').show();
 
             srchData.forEach(s => {
                 if (cmd === 'select') {
-                    saveList.push(s.id);
+                    if (!saveList.includes('' + s.id)) {
+                        saveList.push(s.id);
+                    }
                     let recentIndex = recents.indexOf(s.id);
                     if (recentIndex == -1) {
                         recents.push(s.id);
                     }
-                    $('#b-' + s.id).prop('checked', true);
-                    sList += '<li><div class="badge-div">' +
-                        '<input type="checkbox" checked id="s-' + s.id +
-                        '" onclick=addBadge("' + s.id + '","' + s.name + '","' + s.location +
-                        '",flag=true,code="s-' + s.id + '")>' +
-                        '<div><img src="/storage/uploads/cat.jpg" alt="-"></div>' +
-                        '<span><b>' + s.name + '</b><br><small>' + s.location +
-                        '</small></span>' +
-                        '</div></li>';
-                    $('#s-div').html(sList);
+                    if (!saveList.includes('' + s.id)) {
+                        console.log('xirryo');
+                        $('#b-' + s.id).prop('checked', true);
+                        sList += '<div class="badge-div">' +
+                            '<input type="checkbox" checked id="s-' + s.id +
+                            '" onclick=addBadge("' + s.id + '","' + s.name + '","' + s.location +
+                            '",flag=true,code="s-' + s.id + '")>' +
+                            '<div><img src="/storage/uploads/cat.jpg" alt="-"></div>' +
+                            '<span><b>' + s.name + '</b><br><small>' + s.location +
+                            '</small></span>' +
+                            '</div>';
+                        $('#s-div').html(sList);
+                    }
+
                 }
                 if (cmd === 'clear') {
                     $('#s-' + s.id).prop('checked', false);
@@ -233,6 +275,24 @@
             $('#uField').show();
             $('.saved input').show();
 
+        }
+
+        function hideMsg(code) {
+            $('.' + code).hide();
+        }
+
+        function deleteAll() {
+            saveList = [];
+            saveCmd('delete');
+            $('#uField').show();
+            $('#s-div').hide();
+            $('.delete').hide();
+            $('#saved-data').hide();
+
+        }
+
+        function showDel() {
+            $('.delete').show();
         }
     </script>
 @endsection
