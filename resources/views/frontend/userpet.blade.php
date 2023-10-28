@@ -11,20 +11,20 @@
                 <section class="input-label"><span>Kind of Petsss</span>
                     <span>
                         <span id="data-change">
-                            <i class="fa fa-save" style="color: blue" style="color: #8a8a8a;" id="save"></i>
-                            <i class="fa fa-xmark" style="color: #8a8a8a;" onclick="cancel()"></i>
+                            <i class="fa fa-save" style="color: blue" style="color: #8a8a8a;" id="save" title="Save"></i>
+                            <i class="fa fa-xmark" style="color: #8a8a8a;" onclick="cancel()" title="Cancel"></i>
                         </span>
                         <span id="saved-data" @if (count($pets)) class="disp-menu" @endif>
-                            <i class="fa fa-trash text-danger" onclick="showDel()"></i>
-                            <i class="fa fa-edit" style="color: blue;" onclick="showIn()"></i>
+                            <i class="fa fa-trash text-danger" onclick="showDel()" title="Delete All"></i>
+                            <i class="fa fa-edit" style="color: blue;" onclick="showIn()" title="Edit"></i>
                         </span>
-                        <i class="fa-solid fa-circle-info" style="color: #8a8a8a;"></i>
+                        <i class="fa-solid fa-circle-info" style="color: #8a8a8a;" title="Information"></i>
 
                     </span>
                 </section>
                 <span class="delete">Are you sure you want to delete? <i class="fa fa-check" onclick="deleteAll()"
                         style="display: inline-block;margin-right:1em; margin-left:.5em;"></i> <i class="fa fa-xmark"
-                        onclick="hideMsg('delete')"></i></span>
+                        onclick="hideMsg('delete')"></i></span> <br>
                 <span class="success text-success">Pets assigned successfully. <i class="fa fa-xmark"
                         onclick="hideMsg('success')"></i></span>
                 <div id="s-div"
@@ -82,6 +82,7 @@
 @endsection
 @section('script')
     <script>
+        // backend data ================================
         var record = {!! json_encode($pets->toArray()) !!};
         let srchData = [];
 
@@ -92,6 +93,8 @@
             saveList.push(r['pet_id']);
             recents.push(r['pet_id']);
         });
+
+        // Search Function ============================ 
         $('#uField').on('keyup', () => {
             if ($('#uField').val().length >= 3) {
                 $.ajax({
@@ -135,6 +138,8 @@
             }
 
         });
+
+        // Add function ========================================
         let sList = $('#s-div').html();
 
         function addBadge(id, name, location, flag, code) {
@@ -182,7 +187,7 @@
             }
         }
 
-
+        // Save Function =====================================================
         function saveCmd(cmd) {
             $.ajax({
                 data: {
@@ -222,7 +227,7 @@
             saveCmd('add');
         });
 
-
+        // Select All Logic =====================================
 
         function selection(cmd) {
             let sList = $('#s-div').html();
@@ -267,6 +272,7 @@
             });
         }
 
+        // small button functions ======================
         function cancel() {
             window.location.reload();
         }
