@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(UserController::class)->group(function() {
     Route::get('/','loginForm');
     Route::post('/login','userLogin')->name('user.login');
+    Route::get('/logout','logout')->name('user.logout');
 });
 
 Route::controller(UserPetController::class)->group(function() {

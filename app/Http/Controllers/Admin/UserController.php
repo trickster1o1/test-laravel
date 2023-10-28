@@ -41,4 +41,9 @@ class UserController extends Controller
         }
         return redirect('/')->with('error', '1');
     }
+
+    public function logout() {
+        session()->forget('user');
+        return redirect('/');
+    }
 }

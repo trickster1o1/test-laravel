@@ -15,6 +15,9 @@ class UserPetController extends Model
 
     public function index()
     {
+        if(!session()->has('user')) {
+            return redirect('/');
+        }
         $pets = UserPet::join('pets', 'user_pets.pet_id', '=', 'pets.id')->where('user_pets.user_id', session('user')['id'])
             ->get();
         return view('frontend.userpet', compact('pets'));
