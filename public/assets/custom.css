@@ -120,4 +120,25 @@
     margin-right: 1em;
 } i {
     cursor: pointer;
+} .success > i{
+    display: inline-block;
+    margin-left: 1em;
+} .success {
+    display: none;
+} .saved > .badge-div {
+    background-color: #fafafa;
+    border: 1px solid rgba(0,0,0,.2);   
+} .saved input {
+    display: none;
+} #saved-data {
+    float: left;
+    display: none;
+} #saved-data > i {
+    display: inline-block;
+    margin-right: 1em;
+    margin-left: 1em;
+} #saved-data > i:last-child {
+    margin-right: 2em;
+} #saved-data.disp-menu {
+    display: block;
 }

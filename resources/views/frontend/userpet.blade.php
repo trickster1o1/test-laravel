@@ -8,11 +8,25 @@
             <h5>What kind of pets have you had?</h5>
 
             <div class="input-cont">
-                <section class="input-label"><span>Kind of Petsss</span> <span><span id="data-change"><i class="fa fa-save"
-                                style="color: blue" style="color: #8a8a8a;" id="save"></i><i class="fa fa-xmark"
-                                style="color: #8a8a8a;" onclick="cancel()"></i></span><i class="fa-solid fa-circle-info"
-                            style="color: #8a8a8a;"></i></span></section>
-                <div class="select-div" id="s-div" @if(count($pets)) style="display: flex;" @endif)>
+                <section class="input-label"><span>Kind of Petsss</span>
+                    <span>
+                        <span id="data-change">
+                            <i class="fa fa-save" style="color: blue" style="color: #8a8a8a;" id="save"></i>
+                            <i class="fa fa-xmark" style="color: #8a8a8a;" onclick="cancel()"></i>
+                        </span>
+                        <span id="saved-data" @if (count($pets))
+                            class="disp-menu"
+                        @endif>
+                            <i class="fa fa-trash text-danger" onclick="cancel()"></i>
+                            <i class="fa fa-edit" style="color: blue;" onclick="showIn()"></i>
+                        </span>
+                        <i class="fa-solid fa-circle-info" style="color: #8a8a8a;"></i>
+
+                    </span>
+                </section>
+                <span class="success text-success">Pets assigned successfully. <i class="fa fa-xmark"></i></span>
+                <div id="s-div"
+                    @if (count($pets)) class="select-div saved" style="display: flex;" @else class="select-div" @endif)>
                     @if (count($pets))
                         @foreach ($pets as $pet)
                             <div class="badge-div">
@@ -29,7 +43,8 @@
                         @endforeach
                     @endif
                 </div>
-                <input type="text" placeholder="Enter min 3 characters" id="uField">
+                <input type="text" placeholder="Enter min 3 characters" id="uField"
+                    @if (count($pets)) style="display: none;" @endif>
                 {{-- <form action="{{route('pet.upload')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                         <input type="file" name="filePath">
@@ -98,7 +113,8 @@
                                 list += '<li><div class="badge-div">' +
                                     '<input type="checkbox" id="b-' + m.id +
                                     '" onclick=addBadge("' + m.id + '","' + m.name + '","' + m
-                                    .location + '",flag=false,code="b-' + m.id + '") '+ (!saveList.includes(''+m.id) ? "" : "checked") +' >' +
+                                    .location + '",flag=false,code="b-' + m.id + '") ' + (!
+                                        saveList.includes('' + m.id) ? "" : "checked") + ' >' +
                                     '<div><img src="/storage/uploads/cat.jpg" alt="-"></div>' +
                                     '<span><b>' + m.name + '</b><br><small>' + m.location +
                                     '</small></span>' +
@@ -120,7 +136,9 @@
         let sList = $('#s-div').html();
 
         function addBadge(id, name, location, flag, code) {
-            $('#s-div').css({'display':'flex'});
+            $('#s-div').css({
+                'display': 'flex'
+            });
             $('#data-change').show();
             if (!$('#' + code).is(':checked')) {
                 let index = saveList.indexOf(id);
@@ -163,7 +181,7 @@
                 url: "{{ route('pet.upload') }}",
                 success: function(res) {
                     console.log(res);
-                    window.location.reload();
+                    $('.success').show();
                 },
                 error: function(e) {
                     console.log(e);
@@ -206,8 +224,15 @@
 
             });
         }
+
         function cancel() {
             window.location.reload();
+        }
+
+        function showIn() {
+            $('#uField').show();
+            $('.saved input').show();
+
         }
     </script>
 @endsection
