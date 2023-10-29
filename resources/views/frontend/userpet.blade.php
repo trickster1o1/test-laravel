@@ -232,19 +232,21 @@
         function selection(cmd) {
             let sList = $('#s-div').html();
             $('.select-div').removeClass('saved');
+            $('.select-div').css({'display':'flex'});
             $('#data-change').show();
 
             srchData.forEach(s => {
                 if (cmd === 'select') {
-                    if (!saveList.includes('' + s.id)) {
-                        saveList.push(s.id);
-                    }
+                    
                     let recentIndex = recents.indexOf(s.id);
                     if (recentIndex == -1) {
                         recents.push(s.id);
                     }
-                    if (!saveList.includes('' + s.id)) {
+                    if (!saveList.includes(s.id) && !saveList.includes(''+s.id)) {
+                        saveList.push(s.id);
+
                         console.log('xirryo');
+                        console.log(s.id);
                         $('#b-' + s.id).prop('checked', true);
                         sList += '<div class="badge-div">' +
                             '<input type="checkbox" checked id="s-' + s.id +
@@ -267,7 +269,11 @@
                     $('#select').prop('checked', false);
                     $('#data-change').hide();
                     $('#uField').val('');
+                    $('#s-div').html('');
+            $('.select-div').hide();
+
                 }
+                console.log(saveList);
 
             });
         }
