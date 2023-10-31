@@ -90,14 +90,14 @@
         let saveList = [];
         let recents = [];
         record.forEach(r => {
-            saveList.push(''+r['pet_id']);
-            recents.push(''+r['pet_id']);
+            saveList.push('' + r['pet_id']);
+            recents.push('' + r['pet_id']);
         });
 
         // Search Function ============================ 
         $('#uField').on('keyup', () => {
             if ($('#uField').val().length >= 3) {
-                    $('#select').prop('checked', false);
+                $('#select').prop('checked', false);
                 $.ajax({
                     data: {
                         'search': $('#uField').val(),
@@ -141,9 +141,10 @@
         });
 
         // Add function ========================================
-        let sList = $('#s-div').html();
 
         function addBadge(id, name, location, flag, code) {
+            let sList = $('#s-div').html();
+
             console.log(recents);
             $('.select-div').removeClass('saved');
 
@@ -161,22 +162,22 @@
             });
             $('#data-change').show();
             if (!$('#' + code).is(':checked')) {
-                let index = saveList.indexOf(''+id);
+                let index = saveList.indexOf('' + id);
                 saveList.splice(index, 1);
                 $('#s-' + id).prop('checked', false);
                 $('#b-' + id).prop('checked', false);
             } else {
-                saveList.push(''+id);
-                let recentIndex = recents.indexOf(''+id);
+                saveList.push('' + id);
+                let recentIndex = recents.indexOf('' + id);
                 if (recentIndex == -1) {
-                    recents.push(''+id);
+                    recents.push('' + id);
                 }
                 $('#s-' + id).prop('checked', true);
                 $('#b-' + id).prop('checked', true);
                 if (!flag) {
                     if (recentIndex == -1) {
                         sList += '<div class="badge-div">' +
-                            '<input type="checkbox" checked id="s-' + id +
+                            '<input type="checkbox" id="s-' + id +
                             '" onclick=addBadge("' + id + '","' + name + '","' + location + '",flag=true,code="s-' + id +
                             '")>' +
                             '<div><img src="/storage/uploads/cat.jpg" alt="-"></div>' +
@@ -186,6 +187,10 @@
                         $('#s-div').html(sList);
                     }
                 }
+                saveList.forEach(sl => {
+                    $('#s-' + sl).prop('checked', true);
+                });
+                
             }
         }
 
@@ -235,20 +240,22 @@
         function selection(cmd) {
             let sList = $('#s-div').html();
             $('.select-div').removeClass('saved');
-            $('.select-div').css({'display':'grid'});
+            $('.select-div').css({
+                'display': 'grid'
+            });
             $('#data-change').show();
 
             srchData.forEach(s => {
                 if (cmd === 'select') {
-                    
-                    let recentIndex = recents.indexOf(''+s.id);
-                    
-                    if (!saveList.includes(s.id) && !saveList.includes(''+s.id)) {
-                        saveList.push(''+s.id);
+
+                    let recentIndex = recents.indexOf('' + s.id);
+
+                    if (!saveList.includes(s.id) && !saveList.includes('' + s.id)) {
+                        saveList.push('' + s.id);
 
                         console.log('xirryo');
                         console.log(s.id);
-                        $('#b-' + s.id).prop('checked', true);                
+                        $('#b-' + s.id).prop('checked', true);
                         $('#s-' + s.id).prop('checked', true);
                         if (recentIndex == -1) {
                             sList += '<div class="badge-div">' +
@@ -266,13 +273,13 @@
                         // }
                     }
                     if (recentIndex == -1) {
-                        recents.push(''+s.id);
+                        recents.push('' + s.id);
                     }
 
                 }
                 if (cmd === 'clear') {
                     $('#s-' + s.id).prop('checked', false);
-                    let index = saveList.indexOf(''+s.id);
+                    let index = saveList.indexOf('' + s.id);
                     // let rindex = recents.indexOf(s.id);
                     // recents.splice(index, 1);
                     saveList.splice(index, 1);
@@ -282,7 +289,7 @@
                     $('#data-change').hide();
                     $('#uField').val('');
                     // $('#s-div').html('');
-            // $('.select-div').hide();
+                    // $('.select-div').hide();
 
                 }
                 console.log(saveList);
