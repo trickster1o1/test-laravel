@@ -90,13 +90,14 @@
         let saveList = [];
         let recents = [];
         record.forEach(r => {
-            saveList.push(r['pet_id']);
-            recents.push(r['pet_id']);
+            saveList.push(''+r['pet_id']);
+            recents.push(''+r['pet_id']);
         });
 
         // Search Function ============================ 
         $('#uField').on('keyup', () => {
             if ($('#uField').val().length >= 3) {
+                    $('#select').prop('checked', false);
                 $.ajax({
                     data: {
                         'search': $('#uField').val(),
@@ -143,6 +144,7 @@
         let sList = $('#s-div').html();
 
         function addBadge(id, name, location, flag, code) {
+            console.log(recents);
             $('.select-div').removeClass('saved');
 
             if (!$('#' + code).is(':checked')) {
@@ -155,19 +157,19 @@
             }
 
             $('#s-div').css({
-                'display': 'flex'
+                'display': 'grid'
             });
             $('#data-change').show();
             if (!$('#' + code).is(':checked')) {
-                let index = saveList.indexOf(id);
+                let index = saveList.indexOf(''+id);
                 saveList.splice(index, 1);
                 $('#s-' + id).prop('checked', false);
                 $('#b-' + id).prop('checked', false);
             } else {
-                saveList.push(id);
-                let recentIndex = recents.indexOf(id);
+                saveList.push(''+id);
+                let recentIndex = recents.indexOf(''+id);
                 if (recentIndex == -1) {
-                    recents.push(id);
+                    recents.push(''+id);
                 }
                 $('#s-' + id).prop('checked', true);
                 $('#b-' + id).prop('checked', true);
@@ -199,6 +201,7 @@
                 success: function(res) {
                     if (rmv.length) {
                         rmv.forEach(r => {
+                            console.log(r);
                             $('#' + r).parent().hide();
                         });
                     }
@@ -232,45 +235,54 @@
         function selection(cmd) {
             let sList = $('#s-div').html();
             $('.select-div').removeClass('saved');
-            $('.select-div').css({'display':'flex'});
+            $('.select-div').css({'display':'grid'});
             $('#data-change').show();
 
             srchData.forEach(s => {
                 if (cmd === 'select') {
                     
-                    let recentIndex = recents.indexOf(s.id);
-                    if (recentIndex == -1) {
-                        recents.push(s.id);
-                    }
+                    let recentIndex = recents.indexOf(''+s.id);
+                    
                     if (!saveList.includes(s.id) && !saveList.includes(''+s.id)) {
-                        saveList.push(s.id);
+                        saveList.push(''+s.id);
 
                         console.log('xirryo');
                         console.log(s.id);
-                        $('#b-' + s.id).prop('checked', true);
-                        sList += '<div class="badge-div">' +
-                            '<input type="checkbox" checked id="s-' + s.id +
-                            '" onclick=addBadge("' + s.id + '","' + s.name + '","' + s.location +
-                            '",flag=true,code="s-' + s.id + '")>' +
-                            '<div><img src="/storage/uploads/cat.jpg" alt="-"></div>' +
-                            '<span><b>' + s.name + '</b><br><small>' + s.location +
-                            '</small></span>' +
-                            '</div>';
-                        $('#s-div').html(sList);
+                        $('#b-' + s.id).prop('checked', true);                
+                        $('#s-' + s.id).prop('checked', true);
+                        if (recentIndex == -1) {
+                            sList += '<div class="badge-div">' +
+                                '<input type="checkbox" checked id="s-' + s.id +
+                                '" onclick=addBadge("' + s.id + '","' + s.name + '","' + s.location +
+                                '",flag=true,code="s-' + s.id + '")>' +
+                                '<div><img src="/storage/uploads/cat.jpg" alt="-"></div>' +
+                                '<span><b>' + s.name + '</b><br><small>' + s.location +
+                                '</small></span>' +
+                                '</div>';
+                            $('#s-div').html(sList);
+                        }
+                        //  else {
+
+                        // }
+                    }
+                    if (recentIndex == -1) {
+                        recents.push(''+s.id);
                     }
 
                 }
                 if (cmd === 'clear') {
                     $('#s-' + s.id).prop('checked', false);
-                    let index = saveList.indexOf(s.id);
+                    let index = saveList.indexOf(''+s.id);
+                    // let rindex = recents.indexOf(s.id);
+                    // recents.splice(index, 1);
                     saveList.splice(index, 1);
                     $('.option-div').hide();
                     $('#clear').prop('checked', false);
                     $('#select').prop('checked', false);
                     $('#data-change').hide();
                     $('#uField').val('');
-                    $('#s-div').html('');
-            $('.select-div').hide();
+                    // $('#s-div').html('');
+            // $('.select-div').hide();
 
                 }
                 console.log(saveList);
@@ -295,6 +307,7 @@
 
         function deleteAll() {
             saveList = [];
+            recents = [];
             saveCmd('delete');
             $('#uField').show();
             $('#s-div').hide();

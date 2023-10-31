@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('imageFile')->nullable();
 
-            $table->index('user_id');
             $table->timestamps();
         });
     }
