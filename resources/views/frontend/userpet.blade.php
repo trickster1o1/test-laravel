@@ -259,7 +259,7 @@
                         $('#s-' + s.id).prop('checked', true);
                         if (recentIndex == -1) {
                             sList += '<div class="badge-div">' +
-                                '<input type="checkbox" checked id="s-' + s.id +
+                                '<input type="checkbox" id="s-' + s.id +
                                 '" onclick=addBadge("' + s.id + '","' + s.name + '","' + s.location +
                                 '",flag=true,code="s-' + s.id + '")>' +
                                 '<div><img src="/storage/uploads/cat.jpg" alt="-"></div>' +
@@ -268,6 +268,10 @@
                                 '</div>';
                             $('#s-div').html(sList);
                         }
+                        
+                        saveList.forEach(sl => {
+                            $('#s-' + sl).prop('checked', true);
+                        });
                         //  else {
 
                         // }
