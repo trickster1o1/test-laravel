@@ -28,12 +28,12 @@
                 <span class="success text-success">Pets assigned successfully. <i class="fa fa-xmark"
                         onclick="hideMsg('success')"></i></span>
                 <div id="s-div"
-                    @if (count($pets)) class="select-div saved" style="display: flex;" @else class="select-div" @endif)>
+                    @if (count($pets)) class="select-div saved" style="display: grid;" @else class="select-div" @endif)>
                     @if (count($pets))
                         @foreach ($pets as $pet)
                             <div class="badge-div">
-                                <input type="checkbox" checked id='s-{{ $pet->id }}'
-                                    onclick=addBadge('{{ $pet->id }}','{{ $pet->name }}','{{ $pet->location }}',flag=true,code='s-{{ $pet->id }}')>
+                                <input type="checkbox" id='s-{{ $pet->id }}'
+                                    onclick=addBadge('{{ $pet->id }}','{{ $pet->name }}','{{ $pet->location }}',flag='true',code='s-{{ $pet->id }}')>
                                 <div>
                                     <img src="/storage/uploads/cat.jpg" alt="-">
                                 </div>
@@ -91,6 +91,8 @@
         let recents = [];
         record.forEach(r => {
             saveList.push('' + r['pet_id']);
+            $('#s-'+r['pet_id']).prop('checked',true);
+            // console.log($('#b-'+r['pet_id']).val());
             recents.push('' + r['pet_id']);
         });
 
@@ -145,11 +147,11 @@
         function addBadge(id, name, location, flag, code) {
             let sList = $('#s-div').html();
 
-            console.log(recents);
             $('.select-div').removeClass('saved');
 
             if (!$('#' + code).is(':checked')) {
                 rmv.push(code);
+                
 
             } else {
                 if (rmv.indexOf(code) != -1) {
@@ -166,6 +168,8 @@
                 saveList.splice(index, 1);
                 $('#s-' + id).prop('checked', false);
                 $('#b-' + id).prop('checked', false);
+                console.log(saveList);
+
             } else {
                 saveList.push('' + id);
                 let recentIndex = recents.indexOf('' + id);
@@ -174,6 +178,8 @@
                 }
                 $('#s-' + id).prop('checked', true);
                 $('#b-' + id).prop('checked', true);
+                console.log(saveList);
+
                 if (!flag) {
                     if (recentIndex == -1) {
                         sList += '<div class="badge-div">' +
@@ -324,6 +330,7 @@
             $('#s-div').hide();
             $('.delete').hide();
             $('#saved-data').hide();
+            $('#s-div').html('');
 
         }
 
